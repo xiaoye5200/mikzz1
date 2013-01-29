@@ -1,0 +1,119 @@
+<!--abc-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>	
+</head>
+<body onkeydown="test(h)">
+
+<canvas width="320px" height="460px" id="can1" Style="border:1px solid red"></canvas>
+<script type="text/javascript">
+
+var canvas=document.getElementById("can1");
+var cxt=canvas.getContext("2d");
+
+function hero(x,y,dir,speed)
+{
+	this.x=x;
+	this.y=y;
+	this.dir=dir;
+	this.speed=speed;
+}
+
+var h=new hero(140,340,0,5);
+
+function drawtank(tank)
+{	
+	switch(tank.dir)
+	{
+		case 0:
+		case 2:
+			cxt.fillStyle="#000000";
+			cxt.fillRect(tank.x-10,tank.y-15,5,30);
+			cxt.fillRect(tank.x-4,tank.y-10,8,20);
+			cxt.fillRect(tank.x+5,tank.y-15,5,30);
+			cxt.beginPath();
+			cxt.arc(tank.x,tank.y,4,0,Math.PI*2,true);
+			cxt.closePath();
+			cxt.fillStyle="#0000FF";
+			cxt.fill();
+			cxt.strokeStyle="#FF0000";
+			if(tank.dir==0)
+			{
+				cxt.beginPath();
+				cxt.moveTo(tank.x,tank.y);
+				cxt.lineTo(tank.x,tank.y-22);
+				cxt.closePath();
+			}
+			else
+			{
+				cxt.beginPath();
+				cxt.moveTo(tank.x,tank.y);
+				cxt.lineTo(tank.x,tank.y+22);
+				cxt.closePath();
+			}
+			cxt.stroke();
+			break;
+		case 1:
+		case 3:
+			cxt.fillStyle="#000000";
+			cxt.fillRect(tank.x-15,tank.y-10,30,5);
+			cxt.fillRect(tank.x-10,tank.y-4,20,8);
+			cxt.fillRect(tank.x-15,tank.y+5,30,5);
+			cxt.beginPath();
+			cxt.arc(tank.x,tank.y,4,0,Math.PI*2,true);
+			cxt.closePath();
+			cxt.fillStyle="#0000FF";
+			cxt.fill();
+			cxt.strokeStyle="#FF0000";
+			if(tank.dir==1)
+			{
+				cxt.beginPath();
+				cxt.moveTo(tank.x,tank.y);
+				cxt.lineTo(tank.x+22,tank.y);
+				cxt.closePath();
+			}
+			else
+			{
+				cxt.beginPath();
+				cxt.moveTo(tank.x,tank.y);
+				cxt.lineTo(tank.x-22,tank.y);
+				cxt.closePath();
+			}
+			cxt.stroke();
+			break;
+	}
+}
+	
+drawtank(h);
+	
+function test(tank)
+{
+	cxt.clearRect(0,0,320,460);
+	var code=event.keyCode;
+	switch(code)
+	{
+		case 87:
+			tank.y-=tank.speed;
+			tank.dir=0;
+			break;
+		case 68:
+			tank.x+=tank.speed;
+			tank.dir=1;
+			break;
+		case 83:
+			tank.y+=tank.speed;
+			tank.dir=2;
+			break;
+		case 65:
+			tank.x-=tank.speed;
+			tank.dir=3;
+			break;			
+	}
+	drawtank(tank);
+}
+
+</script>
+
+</body>
+</html>
